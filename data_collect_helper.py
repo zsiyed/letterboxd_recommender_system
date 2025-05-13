@@ -45,6 +45,7 @@ def log_failed_fetch(i, user):
             file.write(json.dumps(fail) + '\n')
     
 
+# takes in a user and index, and scrapes that page, writes to output file
 def scrape_single_review_page(user, i, session, output_file_name):
     url = "https://letterboxd.com/{}/films/reviews/page/{}".format(user, i)
     response = session.get(url, headers=headers)
@@ -63,10 +64,6 @@ def scrape_single_review_page(user, i, session, output_file_name):
             except:
                 film_title = None
                 log_failed_fetch(i, user)
-
-
-
-
 
             # Extract star rating
             try:
@@ -148,7 +145,7 @@ def get_reviews(usernames, output_file_name):
             log_failed_fetch(-1, user)
     session.close()
 
-
+# takes in a list of usernames and writes to an output file name
 def get_reviews_multi(usernames, output_file_name):
     print("STARTING get_reviews_multi")
     # Create a session
